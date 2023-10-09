@@ -21,3 +21,25 @@ test('successfully login @login @regression', async ({ page }) => {
   await page.screenshot({ path: `screenshots/successfullyLogin03.png` })
 
 })
+
+test('unsuccessfully login @login @regression', async ({ page }) => {
+  test.setTimeout(20000);
+
+  // Given the user is on the home page
+  await page.goto('https://automationpratice.com.br/');
+  await page.screenshot({ path: `screenshots/unsuccessfullyLogin01.png` })
+
+  // When the user autenticate with invalid credentials
+  await page.getByRole('link', { name: ' Login' }).click();
+  await page.locator('#user').click();
+  await page.locator('#user').fill('teste@teste');
+  await page.locator('#password').click();
+  await page.locator('#password').fill('123456');
+  await page.screenshot({ path: `screenshots/unsuccessfullyLogin02.png` })
+  await page.getByRole('button', { name: 'login' }).click();
+
+  // Then the user should be logged in
+  await page.getByRole('button', { name: 'OK' }).click();
+  await page.screenshot({ path: `screenshots/unsuccessfullyLogin03.png` })
+
+})
